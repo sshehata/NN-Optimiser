@@ -1,6 +1,6 @@
 clear;
 clc;
-load('../data/3parity.mat');
+load('../data/xordata.mat');
 rng('shuffle')
 
 % important data
@@ -24,13 +24,14 @@ initial_omega = zeros(1, hidden_layer_size - 1);
 initial_nn_params = [initial_theta1(:); initial_theta2(:); initial_omega(:)];
 
 [nn_params, cost, epochs] = stoch_grad(initial_nn_params, input_layer_size, hidden_layer_size, ...
-                                   num_labels, X, y, 10^-3, 1);
+                                   num_labels, X, y, 10^-2, 1, 0.3);
                                
 p = predict(nn_params, input_layer_size, hidden_layer_size, ...
             num_labels, X);
         
+        
 correct = sum(p == y);
 fprintf('\nTraining took: %i epochs.\n', epochs);
-fprintf('Accuracy: %d%% \n', (correct / m * 100));
+fprintf('Accuracy: %.2f%% \n', (correct / m * 100));
 confumat = confusionmat(logical(y), p)
 
