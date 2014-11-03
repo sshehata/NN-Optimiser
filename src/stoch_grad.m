@@ -1,22 +1,22 @@
-function [Theta1, Theta2, Jo] = stoch_grad(nn_params, input_layer_size, ...
+function [nn_params, Jo, epoch] = stoch_grad(nn_params, input_layer_size, ...
                                    hidden_layer_size, num_labels, ...
-                                   X, y, epsilon)
+                                   X, y, epsilon, alpha)
                                 
 	Theta1 = reshape(nn_params(1:hidden_layer_size * (input_layer_size + 1)), ...
 	                 hidden_layer_size, (input_layer_size + 1));
-  nn_params = nn_params(prod(size(Theta1))+1:end);
+  nn_params = nn_params(numel(Theta1)+1:end);
 
 	Theta2 = reshape(nn_params(1:(hidden_layer_size + 1) * num_labels), ...
 	                           num_labels, (hidden_layer_size + 1));
-  nn_params = nn_params(prod(size(Theta2))+1:end);
+  nn_params = nn_params(numel(Theta2)+1:end);
 
   Omega = nn_params';
 
-  alpha = 1;
   m = size(X, 1);
   Jo = inf;
 
   epoch = 0;
+  Error = [];
   while Jo > epsilon
     epoch = epoch + 1;
     Jo = 0;
@@ -39,20 +39,22 @@ function [Theta1, Theta2, Jo] = stoch_grad(nn_params, input_layer_size, ...
       Theta1_delta = Theta1_delta(2:end,:);
       Omega_delta = delta_2(3:end) .* Omega .*  a2(2:end-1) .* (1 - a2(2:end-1)); 
 
-      Theta2 = Theta2 + alpha*Theta2_delta;
-      Theta1 = Theta1 + alpha*Theta1_delta;
-      Omega = Omega + alpha*Omega_delta;
+      Theta2 = Theta2 + alpha * Theta2_delta;
+      Theta1 = Theta1 + alpha * Theta1_delta;
+      Omega = Omega + alpha * Omega_delta;
 
       % updating ThetaH and OmegaH using Jh
       Theta1_delta = (a2 .* a2 .* (1 - a2))' * a1;
       Theta1_delta = Theta1_delta(2:end,:);
       Omega_delta = a2(3:end) .* a2(3:end) .* (1 - a2(3:end)) .* a2(2:end-1);
       %Theta1 = Theta1 + alpha*Theta1_delta;
-      Omega = Omega + alpha*Omega_delta;
+      Omega = Omega + alpha * Omega_delta;
     end
-    
+
     fprintf('Error: %.5f epoch: %i \n', Jo, epoch);
+    Error = [Error Jo];
   end
 
+  plot(1:length(Error), Error);
   nn_params = [Theta1(:); Theta2(:); Omega(:)];
 end
