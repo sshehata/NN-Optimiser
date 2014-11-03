@@ -8,7 +8,7 @@ m = size(X,1);
 n = size(X,2);
 
 input_layer_size = n;
-hidden_layer_size = 2;
+hidden_layer_size = 10;
 num_labels = size(y, 2);
 
 % Randomizing data 
@@ -23,21 +23,19 @@ initial_omega = randomInitializeWeights(0, hidden_layer_size - 1, e);
 
 initial_nn_params = [initial_theta1(:); initial_theta2(:); initial_omega(:)];
 
-lambda = 0;
-
 J = nnCostFunction(initial_nn_params, input_layer_size, hidden_layer_size, ...
-                   num_labels, X, y, lambda);
+                   num_labels, X, y);
 
 options = optimset('MaxIter', 200);
 
 costFunction = @(p) nnCostFunction(p, ...
                                    input_layer_size, ...
                                    hidden_layer_size, ...
-                                   num_labels, X, y, lambda);
+                                   num_labels, X, y, 0);
 
-[nn_params, cost] = fmincg(costFunction, initial_nn_params, options);
+[nn_params, cost] = nnCostFunction(initial_nn_params, input_layer_size, hidden_layer_size, ...
+                                   num_labels, X, y, 0.001);
 cost
-
 Theta1 = reshape(nn_params(1:hidden_layer_size * (input_layer_size + 1)), ...
 	                 hidden_layer_size, (input_layer_size + 1));
 
