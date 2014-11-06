@@ -1,13 +1,11 @@
-function [Theta1, Theta2, Omega, ah, oh] = stoch_grad(Theta1, Theta2, Omega, ...
+function [Theta1, Theta2, Omega] = stoch_grad(Theta1, Theta2, Omega, ...
     X, y, epsilon, alpha, phi)
 
 m = size(X, 1);
 Jo = inf;
 
 epoch = 0;
-Error = zeros(1,40000);
-ah = zeros(40000*m, length(Theta2)-1);
-oh = zeros(1,40000*m);
+Error = [];
 val = 0;
 while Jo > epsilon && epoch < 40000
     epoch = epoch + 1;
@@ -24,12 +22,6 @@ while Jo > epsilon && epoch < 40000
         a2 = [1 sigmoid(z2)];
         z3 = a2 * Theta2';
         a3 = sigmoid(z3);
-        
-        % cache output values for cov calc.
-         val = val + 1;
-        ah(val, :) = a2(2:end);
-        oh(val) = a3;
-       
         
         e = 0.5 * (y(sample) - a3)^2;
         Jo = Jo + e;
@@ -55,12 +47,9 @@ while Jo > epsilon && epoch < 40000
     end
     
     fprintf('Error: %.5f epoch: %i \n', Jo, epoch);
-    Error(epoch) = Jo;
+    Error = [Error Jo];
 end
 
 plot(1:epoch, Error(1:epoch));
-ah = ah(1:val,:)';
-oh = oh(1:val);
-
 
 end

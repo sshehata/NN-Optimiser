@@ -1,6 +1,6 @@
 clear;
 clc;
-load('../data/3parity.mat');
+load('../data/xordata.mat');
 rng('shuffle')
 
 % important data
@@ -31,7 +31,6 @@ p = predict(nn_params, input_layer_size, hidden_layer_size, ...
         
         
 correct = sum(p == y);
-fprintf('\nTraining took: %i epochs.\n', epochs);
 fprintf('Accuracy: %.2f%% \n', (correct / m * 100));
 confumat = confusionmat(logical(y), p)
 
