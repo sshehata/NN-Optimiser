@@ -28,8 +28,7 @@ hidden_layer_size, num_labels, X, y);
                                
 p = predict(nn_params, input_layer_size, hidden_layer_size, ...
             num_labels, X);
-        
-        
+
 correct = sum(p == y);
 fprintf('Accuracy: %.2f%% \n', (correct / m * 100));
 confumat = confusionmat(logical(y), p)

@@ -51,8 +51,7 @@ while hidden_layer_size > input_layer_size + 1
         end
     end
     
-    [n, nidx] = min(p);
-   
+    [~, nidx] = min(p);
     % remove node
     if (nidx == 1)
         Theta1 = Theta1(2:end, :);
