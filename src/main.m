@@ -1,6 +1,11 @@
 clear;
 clc;
-load('../data/xordata.mat');
+% load('../data/xordata.mat')
+load('../data/ionosphere.mat');
+% load('../data/pima.mat');
+% load('../data/iris.mat');
+% load('../data/hepatitis.mat');
+% load('../data/waveform.mat');
 rng('shuffle')
 
 % important data
@@ -8,10 +13,21 @@ m = size(X,1);
 n = size(X,2);
 
 input_layer_size = n;
-hidden_layer_size = 4;
+hidden_layer_size = input_layer_size * 2;
 num_labels = size(y, 2);
 
-% Randomizing data 
+if length(unique(y)) > 2,
+  original_y = y;
+  y_new = zeros(m,num_labels);
+  for i= 1 : m,
+    value=y(i,1);
+    y_new(i,value)=1;
+  end
+  y=y_new;
+  num_labels = size(y, 2);
+end
+
+% Randomizing data
 sel = randperm(m);
 X = X(sel, :);
 y = y(sel, :);
@@ -24,14 +40,13 @@ initial_omega = zeros(1, hidden_layer_size - 1);
 initial_nn_params = [initial_theta1(:); initial_theta2(:); initial_omega(:)];
 
 [nn_params, cost, epochs] = stoch_grad(initial_nn_params, input_layer_size, hidden_layer_size, ...
-                                   num_labels, X, y, 10^-2, 1, 0.3);
-                               
+                                   num_labels, X, y, 10^-3, 1, 0.3);
 p = predict(nn_params, input_layer_size, hidden_layer_size, ...
             num_labels, X);
-        
-        
-correct = sum(p == y);
+if exist('original_y'),
+  y = original_y;
+end
+correct = sum(y == p);
 fprintf('\nTraining took: %i epochs.\n', epochs);
-fprintf('Accuracy: %.2f%% \n', (correct / m * 100));
-confumat = confusionmat(logical(y), p)
-
+fprintf('Accuracy: %.2f%% \n', (correct / m* 100));
+% confumat = confusionmat(logical(y), p)
