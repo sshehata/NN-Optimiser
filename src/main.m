@@ -1,11 +1,14 @@
 clear;
 clc;
 % load('../data/xordata.mat')
-load('../data/ionosphere.mat');
+% load('../data/ionosphere.mat');
 % load('../data/pima.mat');
 % load('../data/iris.mat');
 % load('../data/hepatitis.mat');
 % load('../data/waveform.mat');
+% load('../data/mackey.mat');
+% load('../data/sunspots.mat');
+% load('../data/carcount.mat');
 rng('shuffle')
 
 % important data
