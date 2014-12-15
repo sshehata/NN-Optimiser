@@ -1,4 +1,4 @@
-function [nn_params, Jo, epoch] = stoch_grad(nn_params, input_layer_size, ...
+function [nn_params, Jo, epoch] = stoch_grad_approximation(nn_params, input_layer_size, ...
     hidden_layer_size, num_labels, ...
     X, y, epsilon, alpha, phi)
 Theta1 = reshape(nn_params(1:hidden_layer_size * (input_layer_size + 1)), ...
@@ -30,13 +30,13 @@ while Jo > epsilon & epoch < 500,
 
         a2 = [1 sigmoid(z2)];
         z3 = a2 * Theta2';
-        a3 = sigmoid(z3);
+        a3 = z3;
 
         e = 0.5 * (y(sample) - a3).^2;
         Jo = Jo + e;
 
         % Vectorized BackPropagation algoritm
-        delta_3 = (y(sample) - a3) .* a3 .* (1 - a3);
+        delta_3 = (y(sample) - a3);
         delta_2 = (delta_3 * Theta2) .* ( a2 .* ( 1 - a2 ));
         Theta2_delta = delta_3' * a2;
         Theta1_delta = delta_2' * a1;
