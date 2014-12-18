@@ -1,12 +1,15 @@
 clear;
 clc;
-% load('../data/xordata.mat')
-load('../data/ionosphere.mat');
-% load('../data/pima.mat');
+load('../data/xordata.mat')
+% load('../data/ionosphere.mat'); %1000 iterations
+% load('../data/pima.mat'); %1000 iterations
+% >>>>>>>>>>>>>>..
 % load('../data/iris.mat');
 % load('../data/hepatitis.mat');
 % load('../data/waveform.mat');
-rng('shuffle')
+
+% rng('shuffle')
+rng('default')
 
 % important data
 m = size(X,1);
@@ -35,7 +38,7 @@ y = y(sel, :);
 e = 0.2;
 initial_theta1 = randomInitializeWeights(input_layer_size, hidden_layer_size, e);
 initial_theta2 = randomInitializeWeights(hidden_layer_size, num_labels, e);
-initial_omega = zeros(1, hidden_layer_size - 1);
+initial_omega = tril(rand(hidden_layer_size),-1);
 
 initial_nn_params = [initial_theta1(:); initial_theta2(:); initial_omega(:)];
 
@@ -49,4 +52,4 @@ end
 correct = sum(y == p);
 fprintf('\nTraining took: %i epochs.\n', epochs);
 fprintf('Accuracy: %.2f%% \n', (correct / m* 100));
-% confumat = confusionmat(logical(y), p)
+% confumat = confusionmat(y, p)
