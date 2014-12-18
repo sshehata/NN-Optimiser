@@ -18,52 +18,44 @@ Error = [];
 while j > epsilon & epoch < 1000,
     epoch = epoch + 1;
     j = 0;
-%     average_hidden_layer = zeros(1, hidden_layer_size);
     for sample= 1: m,
         % Forward Propagation
-        a1 = [1 X(sample,:)]
-        z2 = a1 * Theta1'
+        a1 = [1 X(sample,:)];
+        z2 = a1 * Theta1';
         % calculate lateral connection
-        lat_con = (Omega * z2')'
-        z2 = z2 + lat_con
-        a2 = [1 sigmoid(z2)]
-        z3 = a2 * Theta2'
-        a3 = sigmoid(z3)
+        lat_con = (Omega * z2')';
+        z2 = z2 + lat_con;
+        a2 = [1 sigmoid(z2)];
+        z3 = a2 * Theta2';
+        a3 = sigmoid(z3);
 
-        Jo = (1/2) * sum((y(sample) - a3).^2)
-%         Jh = (1/2) * sum((lat_con - average_hidden_layer) .^ 2)
-        j = j + Jo
-%         average_hidden_layer = (average_hidden_layer + Jh)/sample
+        Jo = sum((y(sample) - a3).^2);
+        j = j + Jo;
 
         % BackPropagation algorithm
-        delta_3 = (y(sample) - a3) .* a3 .* (1 - a3)
-        delta_2 = (delta_3 * Theta2) .* ( a2 .* ( 1 - a2 ))
-        Theta2_delta = delta_3' * a2
-        Theta1_delta = delta_2' * a1
-        Theta1_delta = Theta1_delta(2:end,:)
-        Omega_delta = Omega * (delta_2(2:end))' *  (a2(2:end) .* (1 - a2(2:end)))
-        for i = 1: hidden_layer_size,
-          for j =1: i,
-            Omega_delta(j,i) = 0;
-          end
-        end
-        Theta2 = Theta2 - alpha * Theta2_delta
-        Theta1 = Theta1 - alpha * Theta1_delta
-        Omega = Omega - alpha * Omega_delta
+        delta_3 = (y(sample) - a3) .* a3 .* (1 - a3);
+        delta_2 = (delta_3 * Theta2) .* ( a2 .* ( 1 - a2 ));
+        Theta2_delta = delta_3' * a2;
+        Theta1_delta = delta_2' * a1;
+        Theta1_delta = Theta1_delta(2:end,:);
+%        this is the first line
+        Omega_delta = Omega * (delta_2(2:end))' *  (a2(2:end) .* (1 - a2(2:end)));
+%         Omega_delta = [zeros(1, size(Omega, 2)) ; a1' * delta_2(2:end)];
+        Omega_delta = tril(Omega_delta,-1);
+        Theta2 = Theta2 + alpha * Theta2_delta;
+        Theta1 = Theta1 + alpha * Theta1_delta;
+        Omega = Omega + alpha * Omega_delta;
         % updating ThetaH and OmegaH using Jh
-        Theta1_delta = (a2 .* a2 .* (1 - a2))' * a1
-        Theta1_delta = Theta1_delta(2:end,:)
-        Omega_delta = a2(2:end)' * ((a2(2:end) .* (1 - a2(2:end))) .* a2(2:end))
-        Theta1 = Theta1 - phi * Theta1_delta
-        for i = 1: hidden_layer_size,
-          for j =1: i,
-            Omega_delta(j,i) = 0;
-          end
-        end
+        Theta1_delta = (a2 .* a2 .* (1 - a2))' * a1;
+        Theta1_delta = Theta1_delta(2:end,:);
+%        this is the second line
+        Omega_delta = a2(2:end)' * ((a2(2:end) .* (1 - a2(2:end))) .* a2(2:end));
+        Theta1 = Theta1 - phi * Theta1_delta;
+        Omega_delta = tril(Omega_delta,-1);
         Omega = Omega - phi * Omega_delta;
     end
     fprintf('Error: %.5f epoch: %i \n', j, epoch);
-    Error = [Error j];
+    Error = [Error j/m];
 end
 
 figure('name','data')

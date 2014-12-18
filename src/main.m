@@ -1,15 +1,15 @@
 clear;
 clc;
-load('../data/xordata.mat')
-% load('../data/ionosphere.mat'); %1000 iterations
+load('../data/ionosphere.mat'); %1000 iterations
 % load('../data/pima.mat'); %1000 iterations
-% >>>>>>>>>>>>>>..
+% load('../data/hepatitis.mat'); %1000 iterations
+% >>>>>>>>>>>>>>
+% load('../data/xordata.mat')
+% >>>>>>>>>>>>>>
 % load('../data/iris.mat');
-% load('../data/hepatitis.mat');
 % load('../data/waveform.mat');
 
-% rng('shuffle')
-rng('default')
+rng('shuffle')
 
 % important data
 m = size(X,1);
@@ -43,7 +43,7 @@ initial_omega = tril(rand(hidden_layer_size),-1);
 initial_nn_params = [initial_theta1(:); initial_theta2(:); initial_omega(:)];
 
 [nn_params, cost, epochs] = stoch_grad(initial_nn_params, input_layer_size, hidden_layer_size, ...
-                                   num_labels, X, y, 10^-3, 1, 0.3);
+                                   num_labels, X, y, 10^-4, 1, 0.3);
 p = predict(nn_params, input_layer_size, hidden_layer_size, ...
             num_labels, X);
 if exist('original_y'),
