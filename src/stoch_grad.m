@@ -7,7 +7,7 @@ Jo = inf;
 epoch = 0;
 Error = [];
 val = 0;
-while Jo > epsilon && epoch < 40000
+while Jo > epsilon & epoch < 4000
     epoch = epoch + 1;
     Jo = 0;
     for sample=1:m
@@ -23,13 +23,13 @@ while Jo > epsilon && epoch < 40000
         z3 = a2 * Theta2';
         a3 = sigmoid(z3);
         
-        e = 0.5 * (y(sample) - a3)^2;
+        e = 0.5 * (y(sample) - a3).^2;
         Jo = Jo + e;
         
         % Vectorized BackPropagation algoritm
-        delta_3 = (y(sample) - a3) * a3 * (1 - a3);
+        delta_3 = (y(sample) - a3) .* a3 .* (1 - a3);
         delta_2 = (delta_3 * Theta2) .* ( a2 .* ( 1 - a2 ));
-        Theta2_delta = delta_3 * a2;
+        Theta2_delta = delta_3' * a2;
         Theta1_delta = delta_2' * a1;
         Theta1_delta = Theta1_delta(2:end,:);
         Omega_delta = delta_2(2:end)' *  (a2(2:end) .* (1 - a2(2:end)));
