@@ -14,10 +14,10 @@ nn_params = nn_params(numel(Theta2)+1:end);
 
 Omega = reshape(nn_params, [hidden_layer_size,hidden_layer_size]);
 i=0;
-while hidden_layer_size >= input_layer_size + 1
+while hidden_layer_size >= input_layer_size + 1 & i < 10,
     
     [Theta1, Theta2, Omega] = stoch_grad(Theta1, Theta2, Omega, ...
-        X, y, 10^-2, 1, 0.3);
+        X, y, 10^-2, 0.1, 0.01);
     
     ah = zeros(m, hidden_layer_size);
     ao = zeros(m, num_labels);
@@ -51,7 +51,7 @@ while hidden_layer_size >= input_layer_size + 1
         end
     end
     
-    [n, nidx] = min(p);
+    [~, nidx] = min(p);
    
     % remove node
     if (nidx == 1)
@@ -75,7 +75,7 @@ while hidden_layer_size >= input_layer_size + 1
         Omega(:,nidx) = [];
     end
     hidden_layer_size = hidden_layer_size - 1;
-    
+              
     i = i + 1;
 end
 

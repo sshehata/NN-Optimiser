@@ -19,6 +19,9 @@ z1 = z1 + lat_con';
 h1 = sigmoid(z1);
 h2 = sigmoid([ones(m, 1) h1] * Theta2');
 
-p = h2 >= 0.5;
-
+if(size(h2,2) > 1),
+  [~, p] = max(h2, [], 2);
+else
+  p = h2 >= 0.5;
+end
 end
