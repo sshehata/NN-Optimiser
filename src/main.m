@@ -1,24 +1,25 @@
 clear;
 clc;
-% load('../data/xordata.mat');    % 100
+ load('../data/xordata.mat');    % 100
 % load('../data/3parity.mat');    
 % load('../data/ionosphere.mat'); % 88.32
 % load('../data/pima.mat');     % 65.10 
 % load('../data/iris.mat');       % 41.33
 % load('../data/wisconsin.mat');
-load('../data/hepatitis.mat');
+% load('../data/hepatitis.mat');
 % load('../data/waveform.mat');     % 34.1
 % load('../data/mackey.mat');
 % load('../data/sunspots.mat');
 % load('../data/carcount.mat');
-% rng('shuffle')
+ rng('shuffle')
                                                               
 % important data
 m = size(X,1);
 n = size(X,2);
+figure 
 
 input_layer_size = n;
-hidden_layer_size = input_layer_size;
+hidden_layer_size = 7;
 num_labels = size(y, 2);
 if length(unique(y)) > 2,
   original_y = y;
@@ -44,6 +45,14 @@ initial_omega = tril(rand(hidden_layer_size),-1);
 
 initial_nn_params = [initial_theta1(:); initial_theta2(:); initial_omega(:)];
 
+fprintf('Note: Due to random initial weights,\n')
+fprintf('some runs may take a long time to converge.\n\n');
+
+fprintf('Training started with network %i - %i - %i.\n', ...
+        input_layer_size, ...
+        hidden_layer_size, ...
+        num_labels);
+
 [nn_params, hidden_layer_size] = prune(initial_nn_params, input_layer_size, ...
 hidden_layer_size, num_labels, X, y);
                          
@@ -56,4 +65,4 @@ p = predict(nn_params, input_layer_size, hidden_layer_size, ...
 end
 correct = sum(y == p);
 fprintf('Accuracy: %.2f%% \n', (correct / m* 100));
-confumat = confusionmat(y, p)
+confumat = confusionmat(y, double(p))

@@ -12,12 +12,14 @@ Theta2 = reshape(nn_params(1:(hidden_layer_size + 1) * num_labels), ...
     num_labels, (hidden_layer_size + 1));
 nn_params = nn_params(numel(Theta2)+1:end);
 
-Omega = reshape(nn_params, [hidden_layer_size,hidden_layer_size]);
-i=0;
-while true % hidden_layer_size >= input_layer_size + 1 & i < 10,
+Omega = nn_params';
+
+while 1
     
     [Theta1, Theta2, Omega] = stoch_grad(Theta1, Theta2, Omega, ...
-        X, y, 10^-2, 0.1, 0.01);
+        X, y, 10^-2, 1, 0.3);
+    
+    fprintf('pruning...\n');
     
     ah = zeros(m, hidden_layer_size);
     ao = zeros(m, num_labels);
@@ -27,8 +29,8 @@ while true % hidden_layer_size >= input_layer_size + 1 & i < 10,
         z2 = a1 * Theta1';
         
         % calculate lateral connection
-        lat_con = Omega * z2';
-        z2 = z2 + lat_con';
+        lat_con = z2 .* [Omega 0];
+        z2 = z2 + [0 lat_con(1:end-1)];
         
         a2 = [1 sigmoid(z2)];
         z3 = a2 * Theta2';
@@ -51,13 +53,13 @@ while true % hidden_layer_size >= input_layer_size + 1 & i < 10,
         end
     end
     
-    [minco, nidx] = min(p);
-   
-    if minco > 0.3
+    [n, nidx] = min(p);
+    
+    fprintf('removing node %i with correlation coef. %i\n', nidx, n);
+    if (n > 0.5)
         break;
     end
-     fprintf('removing node %i with correlation coef. %i\n', nidx, minco);
-   
+    
     % remove node
     if (nidx == 1)
         Theta1 = Theta1(2:end, :);
@@ -71,18 +73,15 @@ while true % hidden_layer_size >= input_layer_size + 1 & i < 10,
         
     end
     if (nidx == hidden_layer_size || nidx == hidden_layer_size - 1)
-        Omega = Omega(1:end - 1, 1:end-1); 
+        Omega = Omega(:, 1:end - 1); 
     elseif (nidx == 1)
-        Omega = Omega(2:end,2:end);
+        Omega = Omega(:,2:end);
     else
-%         Omega = [Omega(1:nidx - 1,1:nidx - 1)  Omega(nidx+1:end,nidx+1:end)];
-        Omega = [Omega(1:nidx - 1,:) ; Omega(nidx+1:end,:)];
-        Omega(:,nidx) = [];
+        Omega = [Omega(:, 1:nidx - 1)  Omega(:, nidx+1:end)];
     end
     hidden_layer_size = hidden_layer_size - 1;
+    
     fprintf('hidden layer size: %i\n\n', hidden_layer_size);
-              
-    i = i + 1;
 end
 
 [Theta1, Theta2, Omega] = stoch_grad(Theta1, Theta2, Omega, ...

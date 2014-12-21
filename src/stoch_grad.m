@@ -7,7 +7,7 @@ Jo = inf;
 epoch = 0;
 Error = [];
 val = 0;
-while Jo > epsilon & epoch < 4000
+while Jo > epsilon & epoch < 40000
     epoch = epoch + 1;
     Jo = 0;
     for sample=1:m
@@ -46,10 +46,15 @@ while Jo > epsilon & epoch < 4000
         Omega = Omega - phi * tril(Omega_delta,-1);
     end
     
-    fprintf('Error: %.5f epoch: %i \n', Jo, epoch);
+   
     Error = [Error Jo];
 end
-figure;
+fprintf('Error: %.5f \n', Jo);
+if (epoch > 40000)
+    fprintf('Training terminated after %i epochs\n', epoch);
+else
+    fprintf('Network converged after %i epochs\n', epoch);
+end
 plot(1:epoch, Error(1:epoch));
 
 end
