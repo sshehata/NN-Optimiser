@@ -1,14 +1,17 @@
 clear;
 clc;
-load('xordata.mat');
+% load('ionosphere.mat');   % 100
+% load('3parity.mat');      % 100
+% load('hepatitis.mat');
+load('iris.mat');
 % rng('shuffle')
 
 % important data
 m = size(X,1);
 n = size(X,2);
 
-input_layer_size = 2;
-hidden_layer_size = 10;
+input_layer_size = size(X,2);
+hidden_layer_size = input_layer_size;
 num_labels = 1;
 
 % Randomizing data 
@@ -34,7 +37,7 @@ costFunction = @(p) nnCostFunction(p, ...
                                    num_labels, X, y, lambda);
 
 [nn_params, cost] = fmincg(costFunction, initial_nn_params, options);
-cost
+% cost
 
 Theta1 = reshape(nn_params(1:hidden_layer_size * (input_layer_size + 1)), ...
 	                 hidden_layer_size, (input_layer_size + 1));

@@ -9,7 +9,13 @@ function [J, grad] = nnCostFunction(nn_params, input_layer_size, ...
 	                 num_labels, (hidden_layer_size + 1));
 
 	m = size(X, 1);
-  
+y_new = zeros(m,num_labels);
+for i= 1 : m,
+	value=y(i,1);
+	y_new(i,value)=1;
+end
+y=y_new;	
+
 % Feedforward the neural network and calculate the cost in J 
 	a1 = X;
 	a1 = [ones(size(a1,1),1), a1];
@@ -24,7 +30,7 @@ function [J, grad] = nnCostFunction(nn_params, input_layer_size, ...
   temp_theta1(:,1) = [];
   temp_theta2(:,1) = [];
 % cost of the neural network
-  J = (-1/m)*sum( sum(y .* log(a3))+ sum((1.-y) .* log(1-a3)) ) + (lambda/(2*m))*(sum(temp_theta1(:).^2) + sum(temp_theta2(:).^2));
+  J = (-1/m)* sum( sum(y .* log(a3))+ sum((1.-y) .* log(1-a3))) + (lambda/(2*m))* (sum(sum(tempTheta1.^2)) + sum(sum(tempTheta2.^2)));
   
   % Vectorized BackPropagation algoritm to get both Theta1_grad and Theta2_grad
 	delta_3 = a3 - y;
