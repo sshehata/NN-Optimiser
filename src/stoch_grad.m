@@ -16,8 +16,8 @@ while Jo > epsilon && epoch < 40000
         z2 = a1 * Theta1';
         
         % calculate lateral connection
-        lat_con = z2 .* [Omega 0];
-        z2 = z2 + [0 lat_con(1:end-1)];
+        lat_con = Omega * z2';
+        z2 = z2 + lat_con';
         
         a2 = [1 sigmoid(z2)];
         z3 = a2 * Theta2';
@@ -32,24 +32,24 @@ while Jo > epsilon && epoch < 40000
         Theta2_delta = delta_3 * a2;
         Theta1_delta = delta_2' * a1;
         Theta1_delta = Theta1_delta(2:end,:);
-        Omega_delta = delta_2(3:end) .* Omega .*  a2(2:end-1) .* (1 - a2(2:end-1));
+        Omega_delta = delta_2(2:end)' *  (a2(2:end) .* (1 - a2(2:end)));
         
         Theta2 = Theta2 + alpha * Theta2_delta;
         Theta1 = Theta1 + alpha * Theta1_delta;
-        Omega = Omega + alpha * Omega_delta;
+        Omega = Omega + alpha * tril(Omega_delta,-1);
         
         % updating ThetaH and OmegaH using Jh
         Theta1_delta = (a2 .* a2 .* (1 - a2))' * a1;
         Theta1_delta = Theta1_delta(2:end,:);
-        Omega_delta = a2(3:end) .* a2(3:end) .* (1 - a2(3:end)) .* a2(2:end-1);
+        Omega_delta = a2(2:end)' * ((a2(2:end) .* (1 - a2(2:end))) .* a2(2:end));
         Theta1 = Theta1 - phi * Theta1_delta;
-        Omega = Omega - phi * Omega_delta;
+        Omega = Omega - phi * tril(Omega_delta,-1);
     end
     
     fprintf('Error: %.5f epoch: %i \n', Jo, epoch);
     Error = [Error Jo];
 end
-
+figure;
 plot(1:epoch, Error(1:epoch));
 
 end
