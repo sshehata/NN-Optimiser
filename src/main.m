@@ -2,9 +2,9 @@ clear;
 clc;
 % load('ionosphere.mat');   % 100
 % load('3parity.mat');      % 100
-% load('hepatitis.mat');
-load('iris.mat');
-% rng('shuffle')
+load('../data/hepatitis.mat');
+% load('iris.mat');
+rng('shuffle')
 
 % important data
 m = size(X,1);
@@ -12,8 +12,7 @@ n = size(X,2);
 
 input_layer_size = size(X,2);
 hidden_layer_size = input_layer_size;
-num_labels = 3;
-
+num_labels = size(y,2);
 % Randomizing data 
 sel = randperm(m);
 X = X(sel, :);
@@ -46,6 +45,6 @@ Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):en
 	                 num_labels, (hidden_layer_size + 1));
 
 p = predict(Theta1, Theta2, X);
-sum(p ~= y)
+false = 100 * sum(p ~= y)/length(y)
 % p~=y 
 % X
