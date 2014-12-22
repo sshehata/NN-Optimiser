@@ -1,22 +1,22 @@
 clear;
 clc;
 %load('../data/xordata.mat');    % 100
-% load('../data/3parity.mat');    
+% load('../data/3parity.mat');
  load('../data/ionosphere.mat'); % 88.32
-% load('../data/pima.mat');     % 65.10 
-% load('../data/iris.mat');       % 41.33
+% load('../data/pima.mat');     % 65.10
+load('../data/iris.mat');       % 41.33
 % load('../data/wisconsin.mat');
 % load('../data/hepatitis.mat');
-% load('../data/waveform.mat');     % 34.1
+%  load('../data/waveform.mat');     % 34.1
 % load('../data/mackey.mat');
 % load('../data/sunspots.mat');
 % load('../data/carcount.mat');
  rng('shuffle')
-                                                              
+
 % important data
 m = size(X,1);
 n = size(X,2);
-figure 
+figure
 
 input_layer_size = n;
 hidden_layer_size = 2 * n;
@@ -33,7 +33,7 @@ if length(unique(y)) > 2,
 end
 
 
-% Randomizing data 
+% Randomizing data
 sel = randperm(m);
 X = X(sel, :);
 y = y(sel, :);
@@ -55,7 +55,7 @@ fprintf('Training started with network %i - %i - %i.\n', ...
 
 [nn_params, hidden_layer_size] = prune(initial_nn_params, input_layer_size, ...
 hidden_layer_size, num_labels, X, y);
-                         
+
 hidden_layer_size
 p = predict(nn_params, input_layer_size, hidden_layer_size, ...
             num_labels, X);
