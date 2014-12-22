@@ -9,12 +9,12 @@ function [J, grad] = nnCostFunction(nn_params, input_layer_size, ...
 	                 num_labels, (hidden_layer_size + 1));
 
 m = size(X, 1);
-y_new = zeros(m,num_labels);
-for i= 1 : m,
-	value=y(i,1);
-	y_new(i,value)=1;
-end
-y=y_new;	
+% y_new = zeros(m,num_labels);
+% for i= 1 : m,
+% 	value=y(i,1);
+% 	y_new(i,value)=1;
+% end
+% y=y_new;	
 
 % Feedforward the neural network and calculate the cost in J 
 	a1 = X;
