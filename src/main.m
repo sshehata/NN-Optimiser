@@ -2,12 +2,12 @@ clear;
 clc;
 %load('../data/xordata.mat');    % 100
 % load('../data/3parity.mat');    
- %load('../data/ionosphere.mat'); % 88.32
+ load('../data/ionosphere.mat'); % 88.32
 % load('../data/pima.mat');     % 65.10 
 % load('../data/iris.mat');       % 41.33
 % load('../data/wisconsin.mat');
 % load('../data/hepatitis.mat');
- load('../data/waveform.mat');     % 34.1
+% load('../data/waveform.mat');     % 34.1
 % load('../data/mackey.mat');
 % load('../data/sunspots.mat');
 % load('../data/carcount.mat');
