@@ -8,13 +8,13 @@ function [J, grad] = nnCostFunction(nn_params, input_layer_size, ...
 	Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):end), ...
 	                 num_labels, (hidden_layer_size + 1));
 
-	m = size(X, 1);
-% y_new = zeros(m,num_labels);
-% for i= 1 : m,
-% 	value=y(i,1);
-% 	y_new(i,value)=1;
-% end
-% y=y_new;	
+m = size(X, 1);
+y_new = zeros(m,num_labels);
+for i= 1 : m,
+	value=y(i,1);
+	y_new(i,value)=1;
+end
+y=y_new;	
 
 % Feedforward the neural network and calculate the cost in J 
 	a1 = X;
@@ -33,7 +33,7 @@ function [J, grad] = nnCostFunction(nn_params, input_layer_size, ...
   J = (-1/m)* sum( sum(y .* log(a3))+ sum((1.-y) .* log(1-a3))) + (lambda/(2*m))* (sum(sum(temp_theta1.^2)) + sum(sum(temp_theta2.^2)));
   
   % Vectorized BackPropagation algoritm to get both Theta1_grad and Theta2_grad
-	delta_3 = (a3 - y) .* (a3 .* (1- a3));
+	delta_3 = (a3 - y);
 	delta_2 = (delta_3 * Theta2) .* ( a2' .* ( 1 - a2' ))'; %I am using it directly instead of using sigmoid gradient
 
 	Theta2_delta = delta_3' * a2; 

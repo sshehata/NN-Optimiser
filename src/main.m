@@ -2,8 +2,9 @@ clear;
 clc;
 % load('ionosphere.mat');   % 100
 % load('3parity.mat');      % 100
-load('../data/hepatitis.mat');
-% load('iris.mat');
+% load('../data/hepatitis.mat');
+load('../data/waveform.mat');
+% load('../data/iris.mat');
 rng('shuffle')
 
 % important data
@@ -12,7 +13,7 @@ n = size(X,2);
 
 input_layer_size = size(X,2);
 hidden_layer_size = input_layer_size;
-num_labels = size(y,2);
+num_labels = length(unique(y));
 % Randomizing data 
 sel = randperm(m);
 X = X(sel, :);
@@ -28,7 +29,7 @@ lambda = 0;
 J = nnCostFunction(initial_nn_params, input_layer_size, hidden_layer_size, ...
                    num_labels, X, y, lambda);
 
-options = optimset('MaxIter', 200);
+options = optimset('MaxIter', 400);
 
 costFunction = @(p) nnCostFunction(p, ...
                                    input_layer_size, ...
@@ -45,6 +46,6 @@ Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):en
 	                 num_labels, (hidden_layer_size + 1));
 
 p = predict(Theta1, Theta2, X);
-false = 100 * sum(p ~= y)/length(y)
+sum(p ~= y)
 % p~=y 
 % X
