@@ -33,7 +33,7 @@ m = size(X, 1);
   J = (-1/m)* sum( sum(y .* log(a3))+ sum((1.-y) .* log(1-a3))) + (lambda/(2*m))* (sum(sum(temp_theta1.^2)) + sum(sum(temp_theta2.^2)));
   
   % Vectorized BackPropagation algoritm to get both Theta1_grad and Theta2_grad
-	delta_3 = (a3 - y);
+	delta_3 = (a3 - y) .* ( a3 .* ( 1 - a3 ));
 	delta_2 = (delta_3 * Theta2) .* ( a2' .* ( 1 - a2' ))'; %I am using it directly instead of using sigmoid gradient
 
 	Theta2_delta = delta_3' * a2; 

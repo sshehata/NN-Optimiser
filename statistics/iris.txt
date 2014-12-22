@@ -1,0 +1,31 @@
+hidden nodes                  1
+accuracy                      96.667
+number of wrong predictions   5
+
+hidden nodes                  2
+accuracy                      98.667
+number of wrong predictions   2
+
+hidden nodes                  3
+accuracy                      98.667
+number of wrong predictions   2
+
+hidden nodes                  4
+accuracy                      98.667
+number of wrong predictions   2
+
+hidden nodes                  5
+accuracy                      98.667
+number of wrong predictions   2
+
+hidden nodes                  6
+accuracy                      98.667
+number of wrong predictions   2
+
+hidden nodes                  7
+accuracy                      99.333
+number of wrong predictions   1
+
+hidden nodes                  8
+accuracy                      98.667
+number of wrong predictions   2

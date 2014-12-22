@@ -1,0 +1,151 @@
+hidden nodes                  1
+accuracy                      57.5
+number of wrong predictions   34
+
+hidden nodes                  2
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  3
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  4
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  5
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  6
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  7
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  8
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  9
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  10
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  11
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  12
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  13
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  14
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  15
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  16
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  17
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  18
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  19
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  20
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  21
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  22
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  23
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  24
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  25
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  26
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  27
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  28
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  29
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  30
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  31
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  32
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  33
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  34
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  35
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  36
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  37
+accuracy                      58.75
+number of wrong predictions   33
+
+hidden nodes                  38
+accuracy                      58.75
+number of wrong predictions   33
