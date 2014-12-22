@@ -7,7 +7,7 @@ Jo = inf;
 epoch = 0;
 Error = [];
 val = 0;
-while Jo > epsilon & epoch < 40000
+while Jo > epsilon & epoch < 4000
     epoch = epoch + 1;
     Jo = 0;
     for sample=1:m
@@ -46,7 +46,7 @@ while Jo > epsilon & epoch < 40000
         Omega = Omega - phi * tril(Omega_delta,-1);
     end
     
-   
+   fprintf('Error %i Epoch %i \n', Jo, epoch);
     Error = [Error Jo];
 end
 fprintf('Error: %.5f \n', Jo);

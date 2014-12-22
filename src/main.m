@@ -1,13 +1,13 @@
 clear;
 clc;
- load('../data/xordata.mat');    % 100
+%load('../data/xordata.mat');    % 100
 % load('../data/3parity.mat');    
-% load('../data/ionosphere.mat'); % 88.32
+ %load('../data/ionosphere.mat'); % 88.32
 % load('../data/pima.mat');     % 65.10 
 % load('../data/iris.mat');       % 41.33
 % load('../data/wisconsin.mat');
 % load('../data/hepatitis.mat');
-% load('../data/waveform.mat');     % 34.1
+ load('../data/waveform.mat');     % 34.1
 % load('../data/mackey.mat');
 % load('../data/sunspots.mat');
 % load('../data/carcount.mat');
@@ -19,7 +19,7 @@ n = size(X,2);
 figure 
 
 input_layer_size = n;
-hidden_layer_size = 7;
+hidden_layer_size = 2 * n;
 num_labels = size(y, 2);
 if length(unique(y)) > 2,
   original_y = y;

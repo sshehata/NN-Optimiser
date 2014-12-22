@@ -41,19 +41,21 @@ while true % hidden_layer_size >= input_layer_size + 1 & i < 10,
     
     p = zeros(hidden_layer_size, 1);
     for i=1:hidden_layer_size
-        covar = cov(ah(:,i), ao);
-        varh = var(ah(:,i));
-        varo = var(ao);
-        if (varh == 0 || varo == 0)
-            p(i) = 0;
-        else
-            p(i) = abs(covar(2)) / sqrt(varh * varo);
+        for j=1:num_labels
+            covar = cov(ah(:,i), ao(:,j));
+            varh = var(ah(:,i));
+            varo = var(ao(:,j));
+            if (varh == 0 || varo == 0)
+                p(i) = 0;
+            else
+                p(i) = p(i) + abs(covar(2)) / sqrt(varh * varo);
+            end
         end
     end
     
     [minco, nidx] = min(p);
    
-    if minco > 0.3
+    if minco > 0.5
         break;
     end
      fprintf('removing node %i with correlation coef. %i\n', nidx, minco);
