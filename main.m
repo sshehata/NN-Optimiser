@@ -12,7 +12,7 @@ n = size(X,2);
 
 input_layer_size = size(X,2);
 hidden_layer_size = input_layer_size;
-num_labels = 1;
+num_labels = 3;
 
 % Randomizing data 
 sel = randperm(m);
