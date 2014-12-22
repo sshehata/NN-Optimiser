@@ -13,11 +13,28 @@ Theta2 = reshape(nn_params(1:(hidden_layer_size + 1) * num_labels), ...
 nn_params = nn_params(numel(Theta2)+1:end);
 
 Omega = reshape(nn_params, [hidden_layer_size,hidden_layer_size]);
+prevError = inf;
+prevTheta1 = Theta1; 
+prevTheta2 = Theta2; 
+prevOmega = Omega;
 i=0;
 while true % hidden_layer_size >= input_layer_size + 1 & i < 10,
     
-    [Theta1, Theta2, Omega] = stoch_grad(Theta1, Theta2, Omega, ...
+    [Theta1, Theta2, Omega, Error] = stoch_grad(Theta1, Theta2, Omega, ...
         X, y, 10^-2, 0.1, 0.01);
+    
+    if (Error >= prevError)
+        Theta1 = prevTheta1;
+        Theta2 = prevTheta2;
+        Omega = prevOmega;
+        hidden_layer_size = hidden_layer_size + 1;
+        break;
+    end
+    
+    prevError = Error;
+    prevTheta1 = Theta1;
+    prevTheta2 = Theta2;
+    prevOmega = Omega;
     
     ah = zeros(m, hidden_layer_size);
     ao = zeros(m, num_labels);
@@ -70,8 +87,8 @@ while true % hidden_layer_size >= input_layer_size + 1 & i < 10,
     else
         Theta1 = Theta1(1:nidx -1, :);
         Theta2 = Theta2(:, 1:nidx);
-        
     end
+    
     if (nidx == hidden_layer_size || nidx == hidden_layer_size - 1)
         Omega = Omega(1:end - 1, 1:end-1); 
     elseif (nidx == 1)
@@ -87,9 +104,6 @@ while true % hidden_layer_size >= input_layer_size + 1 & i < 10,
     i = i + 1;
 end
 
-[Theta1, Theta2, Omega] = stoch_grad(Theta1, Theta2, Omega, ...
-        X, y, 10^-2, 1, 0.3);
-    
 nn_params = [Theta1(:); Theta2(:); Omega(:)];
 
 
